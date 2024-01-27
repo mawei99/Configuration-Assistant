@@ -14,14 +14,14 @@ it('can render page', function () {
     $this->get(ConfigurationTemplateResource::getUrl('index'))->assertSuccessful();
 });
 
-it('can list microsoft tenant', function () {
+it('can list configuration template', function () {
     $configurationTemplate = ConfigurationTemplate::factory()->count(10)->create();
 
     Livewire::test(ListConfigurationTemplates::class)
         ->assertCanSeeTableRecords($configurationTemplate);
 });
 
-it('can create microsoft tenant', function () {
+it('can create configuration template', function () {
     Livewire::test(ListConfigurationTemplates::class)
         ->mountAction('create')
         ->setActionData([
@@ -32,7 +32,7 @@ it('can create microsoft tenant', function () {
     $this->assertCount(1, ConfigurationTemplate::all());
 });
 
-it('can edit microsoft tenant', function () {
+it('can edit configuration template', function () {
     $configurationTemplate = ConfigurationTemplate::factory()->state([
         'name' => 'Before-Editing'
     ])->create();
@@ -46,7 +46,7 @@ it('can edit microsoft tenant', function () {
     $this->assertEquals('After-Editing', ConfigurationTemplate::first()->name);
 });
 
-it('can delete microsoft tenant', function () {
+it('can delete configuration template', function () {
     $configurationTemplate = ConfigurationTemplate::factory()->create();
 
     Livewire::test(ListConfigurationTemplates::class)
