@@ -12,7 +12,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('value');
-            $table->foreignId(\App\Models\Configuration\Property\PropertyType::class);
+            $table->foreignIdFor(\App\Models\Configuration\Property\PropertyType::class);
         });
     }
 

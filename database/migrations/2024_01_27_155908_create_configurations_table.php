@@ -11,7 +11,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->foreignId(\App\Models\Configuration\ConfigurationTemplate::class);
+            $table->foreignIdFor(\App\Models\Configuration\ConfigurationTemplate::class);
         });
     }
 
