@@ -6,6 +6,7 @@ use App\Filament\Resources\MicrosoftTenantResource\Pages;
 use App\Filament\Resources\MicrosoftTenantResource\RelationManagers;
 use App\Models\MicrosoftTenant\MicrosoftTenant;
 use Faker\Provider\Text;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -42,6 +43,7 @@ class MicrosoftTenantResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -63,6 +65,7 @@ class MicrosoftTenantResource extends Resource
             'index' => Pages\ListMicrosoftTenants::route('/'),
             'create' => Pages\CreateMicrosoftTenant::route('/create'),
             'edit' => Pages\EditMicrosoftTenant::route('/{record}/edit'),
+            'view' => Pages\ViewMicrosoftTenant::route('/{record}/view'),
         ];
     }
 }
