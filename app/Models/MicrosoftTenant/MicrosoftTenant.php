@@ -9,11 +9,4 @@ class MicrosoftTenant extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'tenant_id',
-        'application_id',
-        'secret',
-    ];
-
 }

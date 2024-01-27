@@ -40,7 +40,8 @@ class MicrosoftTenantResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->modalWidth('xl'),
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->modalWidth('xl'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -58,7 +59,6 @@ class MicrosoftTenantResource extends Resource
     public static function getPages(): array {
         return [
             'index' => Pages\ListMicrosoftTenants::route('/'),
-            'view' => Pages\ViewMicrosoftTenant::route('/{record}/view'),
         ];
     }
 }
