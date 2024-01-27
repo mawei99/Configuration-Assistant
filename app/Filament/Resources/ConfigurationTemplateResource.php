@@ -19,8 +19,7 @@ class ConfigurationTemplateResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
-    {
+    public static function form(Form $form): Form {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name'),
@@ -28,8 +27,7 @@ class ConfigurationTemplateResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
-    {
+    public static function table(Table $table): Table {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->sortable(),
@@ -47,15 +45,13 @@ class ConfigurationTemplateResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
+    public static function getRelations(): array {
         return [
             //
         ];
     }
 
-    public static function getPages(): array
-    {
+    public static function getPages(): array {
         return [
             'index' => Pages\ListConfigurationTemplates::route('/'),
             'create' => Pages\CreateConfigurationTemplate::route('/create'),

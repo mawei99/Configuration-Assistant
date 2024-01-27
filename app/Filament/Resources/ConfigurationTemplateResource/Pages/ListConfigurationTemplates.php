@@ -10,8 +10,7 @@ class ListConfigurationTemplates extends ListRecords
 {
     protected static string $resource = ConfigurationTemplateResource::class;
 
-    protected function getHeaderActions(): array
-    {
+    protected function getHeaderActions(): array {
         return [
             Actions\CreateAction::make(),
         ];

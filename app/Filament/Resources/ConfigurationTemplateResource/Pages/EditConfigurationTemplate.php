@@ -10,20 +10,17 @@ class EditConfigurationTemplate extends EditRecord
 {
     protected static string $resource = ConfigurationTemplateResource::class;
 
-    protected function getHeaderActions(): array
-    {
+    protected function getHeaderActions(): array {
         return [
             Actions\DeleteAction::make(),
         ];
     }
 
-    protected function getRedirectUrl(): string
-    {
+    protected function getRedirectUrl(): string {
         return $this->getResource()::getUrl('index');
     }
 
-    protected function getSavedNotificationTitle(): ?string
-    {
+    protected function getSavedNotificationTitle(): ?string {
         return 'Configuration Template updated';
     }
 }

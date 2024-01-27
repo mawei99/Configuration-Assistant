@@ -10,13 +10,11 @@ class CreateConfigurationTemplate extends CreateRecord
 {
     protected static string $resource = ConfigurationTemplateResource::class;
 
-    protected function getRedirectUrl(): string
-    {
+    protected function getRedirectUrl(): string {
         return $this->getResource()::getUrl('index');
     }
 
-    protected function getCreatedNotificationTitle(): ?string
-    {
+    protected function getCreatedNotificationTitle(): ?string {
         return 'Configuration Template created';
     }
 }

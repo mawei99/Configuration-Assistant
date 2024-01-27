@@ -10,8 +10,7 @@ class ListMicrosoftTenants extends ListRecords
 {
     protected static string $resource = MicrosoftTenantResource::class;
 
-    protected function getHeaderActions(): array
-    {
+    protected function getHeaderActions(): array {
         return [
             Actions\CreateAction::make(),
         ];
