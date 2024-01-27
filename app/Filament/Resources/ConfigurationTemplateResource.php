@@ -10,8 +10,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ConfigurationTemplateResource extends Resource
 {
@@ -21,6 +19,7 @@ class ConfigurationTemplateResource extends Resource
 
     public static function form(Form $form): Form {
         return $form
+            ->columns(1)
             ->schema([
                 Forms\Components\TextInput::make('name'),
                 Forms\Components\TextInput::make('url'),
@@ -36,7 +35,8 @@ class ConfigurationTemplateResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->modalWidth('xl'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -54,8 +54,6 @@ class ConfigurationTemplateResource extends Resource
     public static function getPages(): array {
         return [
             'index' => Pages\ListConfigurationTemplates::route('/'),
-            'create' => Pages\CreateConfigurationTemplate::route('/create'),
-            'edit' => Pages\EditConfigurationTemplate::route('/{record}/edit'),
         ];
     }
 }

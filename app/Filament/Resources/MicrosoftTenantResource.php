@@ -20,6 +20,7 @@ class MicrosoftTenantResource extends Resource
 
     public static function form(Form $form): Form {
         return $form
+            ->columns(1)
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\TextInput::make('tenant_id')->required(),
@@ -37,7 +38,8 @@ class MicrosoftTenantResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->modalWidth('xl'),
                 Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
@@ -56,8 +58,6 @@ class MicrosoftTenantResource extends Resource
     public static function getPages(): array {
         return [
             'index' => Pages\ListMicrosoftTenants::route('/'),
-            'create' => Pages\CreateMicrosoftTenant::route('/create'),
-            'edit' => Pages\EditMicrosoftTenant::route('/{record}/edit'),
             'view' => Pages\ViewMicrosoftTenant::route('/{record}/view'),
         ];
     }
