@@ -37,6 +37,8 @@ class ConfigurationTemplateResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->modalWidth('xl'),
+                Tables\Actions\DeleteAction::make()
+                    ->modalWidth('xl'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

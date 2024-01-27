@@ -4,20 +4,12 @@ namespace Database\Factories\Configuration;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Configuration\ConfigurationTemplate>
- */
 class ConfigurationTemplateFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
+    public function definition(): array {
         return [
-            //
+            'name' => 'Test Configuration Template',
+            'url' => 'test.de/api/v1'
         ];
     }
 }
