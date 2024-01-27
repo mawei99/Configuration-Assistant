@@ -9,10 +9,11 @@ return new class extends Migration
     public function up(): void {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Configuration\Configuration::class);
             $table->timestamps();
             $table->string('name');
             $table->string('value');
-            $table->foreignIdFor(\App\Models\Configuration\Property\PropertyType::class);
+            $table->string('type');
         });
     }
 

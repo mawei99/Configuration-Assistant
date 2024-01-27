@@ -5,11 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ConfigurationResource\Pages;
 use App\Filament\Resources\ConfigurationResource\RelationManagers;
 use App\Models\Configuration\Configuration;
+
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+
 
 class ConfigurationResource extends Resource
 {
@@ -26,6 +28,20 @@ class ConfigurationResource extends Resource
                     ->relationship(name: 'configurationTemplate', titleAttribute: 'name')
                     ->label('Template')
                     ->required(),
+                Forms\Components\Repeater::make('properties')
+                    ->relationship()
+                    ->schema([
+                    Forms\Components\TextInput::make('name')->required(),
+                    Forms\Components\Select::make('type')
+                        ->options([
+                            'boolean',
+                            'int',
+                            'string',
+                        ])
+                    ->required(),
+                    Forms\Components\TextInput::make('value')->required(),
+                ])->columns(3)
+                ->addActionLabel('Add Property'),
             ]);
     }
 
