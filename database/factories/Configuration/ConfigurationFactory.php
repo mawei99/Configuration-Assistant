@@ -2,22 +2,15 @@
 
 namespace Database\Factories\Configuration;
 
+use App\Models\Configuration\ConfigurationTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Configuration\Configuration>
- */
 class ConfigurationFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
+    public function definition(): array {
         return [
-            //
+            'name' => 'Test Configuration',
+            'configuration_template_id' => ConfigurationTemplate::factory()->create()->id,
         ];
     }
 }
