@@ -2,22 +2,16 @@
 
 namespace Database\Factories\Configuration\PropertyType;
 
+use App\Models\Configuration\Configuration;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Configuration\Property\Property>
- */
 class PropertyFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
+    public function definition(): array {
         return [
-            //
+            'configuration_id' => Configuration::first() ?? Configuration::factory()->create(),
+            'key' => 'test',
+            'value' => 'something',
         ];
     }
 }

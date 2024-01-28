@@ -43,17 +43,11 @@ class ConfigurationResource extends Resource
                             Forms\Components\Repeater::make('properties')
                                 ->relationship()
                                 ->schema([
-                                    Forms\Components\TextInput::make('name')->required(),
-                                    Forms\Components\Select::make('type')
-                                        ->options([
-                                            'boolean',
-                                            'int',
-                                            'string',
-                                        ])->required(),
+                                    Forms\Components\TextInput::make('key')->required(),
                                     Forms\Components\TextInput::make('value')->required(),
-                                ])->columns(3)
+                                ])->columns(2)
                                 ->addActionLabel('Add Property')
-                                ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
+                                ->itemLabel(fn (array $state): ?string => $state['key'] ?? null)
                                 ->collapsible()
                                 ->collapsed()
                                 ->reorderable(),
