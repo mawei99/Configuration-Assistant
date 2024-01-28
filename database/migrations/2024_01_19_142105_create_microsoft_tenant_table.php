@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('tenant_id');
             $table->string('application_id');
             $table->string('secret');
+            $table->string('description')->nullable();;
             $table->string('access_token')->nullable();
             $table->timestamps();
         });

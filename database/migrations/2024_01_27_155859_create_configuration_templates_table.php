@@ -9,9 +9,10 @@ return new class extends Migration
     public function up(): void {
         Schema::create('configuration_templates', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('name');
             $table->string('url');
+            $table->string('description')->nullable();;
+            $table->timestamps();
         });
     }
 

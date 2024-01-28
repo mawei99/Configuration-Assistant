@@ -10,10 +10,10 @@ return new class extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Configuration\Configuration::class);
-            $table->timestamps();
             $table->string('name');
             $table->string('value');
             $table->string('type');
+            $table->timestamps();
         });
     }
 

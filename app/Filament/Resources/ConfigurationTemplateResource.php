@@ -23,6 +23,7 @@ class ConfigurationTemplateResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name'),
                 Forms\Components\TextInput::make('url'),
+                Forms\Components\Textarea::make('description'),
             ]);
     }
 

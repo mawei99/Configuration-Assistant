@@ -20,13 +20,14 @@ class MicrosoftTenantResource extends Resource
 
     public static function form(Form $form): Form {
         return $form
-            ->columns(1)
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\TextInput::make('tenant_id')->required(),
                 Forms\Components\TextInput::make('application_id')->required(),
-                Forms\Components\TextInput::make('secret')->required(),
-            ]);
+                Forms\Components\TextInput::make('secret')->required()
+                    ->password()->revealable(),
+                Forms\Components\Textarea::make('description'),
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table {
