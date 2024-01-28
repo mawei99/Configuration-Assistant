@@ -11,10 +11,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('tenant_id');
-            $table->string('application_id');
-            $table->string('secret');
+            $table->string('client_id');
+            $table->string('secret_id')->nullable();
+            $table->string('secret_value');
             $table->string('description')->nullable();;
-            $table->string('access_token')->nullable();
+            $table->longText('access_token')->nullable();
             $table->timestamps();
         });
     }

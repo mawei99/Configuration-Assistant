@@ -27,8 +27,8 @@ it('can create microsoft tenant', function () {
         ->setActionData([
             'name' => 'test',
             'tenant_id' => 123,
-            'application_id' => 456,
-            'secret' => 789,
+            'client_id' => 456,
+            'secret_value' => 789,
         ])->callMountedAction();
 
     $this->assertCount(1, MicrosoftTenant::all());

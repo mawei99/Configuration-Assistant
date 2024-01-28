@@ -10,8 +10,8 @@ class MicrosoftTenantFactory extends Factory
         return [
             'name' => 'Test Tenant',
             'tenant_id' => 1234,
-            'application_id' => 4567,
-            'secret' => 8910,
+            'client_id' => 4567,
+            'secret_value' => 8910,
         ];
     }
 }

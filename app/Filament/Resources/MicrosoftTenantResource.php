@@ -25,8 +25,9 @@ class MicrosoftTenantResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\TextInput::make('tenant_id')->required(),
-                Forms\Components\TextInput::make('application_id')->required(),
-                Forms\Components\TextInput::make('secret')->required()
+                Forms\Components\TextInput::make('client_id')->required(),
+                Forms\Components\TextInput::make('secret_id'),
+                Forms\Components\TextInput::make('secret_value')->required()
                     ->password()->revealable(),
                 Forms\Components\Textarea::make('description'),
             ])->columns(1);
