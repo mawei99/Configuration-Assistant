@@ -31,17 +31,20 @@ class ConfigurationResource extends Resource
                 Forms\Components\Repeater::make('properties')
                     ->relationship()
                     ->schema([
-                    Forms\Components\TextInput::make('name')->required(),
-                    Forms\Components\Select::make('type')
-                        ->options([
-                            'boolean',
-                            'int',
-                            'string',
-                        ])
-                    ->required(),
-                    Forms\Components\TextInput::make('value')->required(),
-                ])->columns(3)
-                ->addActionLabel('Add Property'),
+                        Forms\Components\TextInput::make('name')->required(),
+                        Forms\Components\Select::make('type')
+                            ->options([
+                                'boolean',
+                                'int',
+                                'string',
+                                ])->required(),
+                        Forms\Components\TextInput::make('value')->required(),
+                        ])->columns(3)
+                    ->addActionLabel('Add Property')
+                    ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
+                    ->collapsible()
+                    ->collapsed()
+                    ->reorderable(),
             ]);
     }
 
