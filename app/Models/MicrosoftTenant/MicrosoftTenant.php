@@ -2,6 +2,7 @@
 
 namespace App\Models\MicrosoftTenant;
 
+use App\Models\Configuration\Configuration;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
@@ -12,7 +13,7 @@ class MicrosoftTenant extends Model
 
     public function tokenStatusMessage(): string {
         if ($this->accessTokenActive()) {
-            return 'The access Token is valid';
+            return 'The current access Token is valid';
         }
 
         return 'The access token is not active';
@@ -34,7 +35,11 @@ class MicrosoftTenant extends Model
         $this->save();
     }
 
-    public function importConfiguration() {
+    public function importConfiguration(): void {
+        $configuration = Configuration::find(2);
 
+        Http::withToken($this->access_token)
+            ->post($configuration->configurationTemplate->url,
+                $configuration->properties->pluck('value', 'key')->toArray());
     }
 }

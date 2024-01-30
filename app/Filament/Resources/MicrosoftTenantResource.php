@@ -42,35 +42,15 @@ class MicrosoftTenantResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('Import configuration')
+                    ->steps(MicrosoftTenantResource::importWizard())
+                    ->action(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->importConfiguration()// function (Array $data) {
+                        //return Configuration::findOrFail($data['configuration']);})
+                    )->modalWidth('xl'),
                 Tables\Actions\EditAction::make()
                     ->modalWidth('xl'),
                 Tables\Actions\DeleteAction::make()
                     ->modalWidth('xl'),
-                Tables\Actions\Action::make('Import configuration')
-                ->form([
-                    Forms\Components\Wizard::make([
-                        Forms\Components\Wizard\Step::make('Authorization')
-                            ->description('Check the access token')
-                            ->schema([
-                                Forms\Components\TextInput::make('status')
-                                    ->readOnly()
-                                    ->default(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->tokenStatusMessage())
-                                ->hintAction(
-                                    Action::make('New access token')
-                                    ->action(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->renewAccessToken())
-                                ),
-                            ]),
-                        Forms\Components\Wizard\Step::make('Configuration Selection')
-                            ->description('Select the configuration to import')
-                            ->schema([
-                                Forms\Components\TextInput::make('Tenant')
-                                    ->readOnly()
-                                    ->default(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->name),
-                                Forms\Components\Select::make('Configuration')
-                                    ->options(Configuration::all()->pluck('name', 'id'))
-                            ]),
-                    ]),
-                ])->modalWidth('xl')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -89,5 +69,30 @@ class MicrosoftTenantResource extends Resource
         return [
             'index' => Pages\ListMicrosoftTenants::route('/'),
         ];
+    }
+
+    private static function importWizard(): array {
+        return [Forms\Components\Wizard\Step::make('Authorization')
+                        ->description('Check the access token')
+                        ->schema([
+                            Forms\Components\TextInput::make('status')
+                                ->readOnly()
+                                ->live(onBlur: true)
+                                ->default(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->tokenStatusMessage())
+                                ->hintAction( Action::make('Create new access token')
+                                            ->requiresConfirmation()
+                                            ->action(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->renewAccessToken()))
+                        ]),
+                    Forms\Components\Wizard\Step::make('Configuration Selection')
+                        ->description('Select the configuration to import')
+                        ->schema([
+                            Forms\Components\TextInput::make('Tenant')
+                                ->readOnly()
+                                ->default(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->name),
+                            Forms\Components\Select::make('configuration')
+                                ->options(Configuration::all()->pluck('name', 'id'))
+                                ->required()
+                        ])
+                ];
     }
 }
