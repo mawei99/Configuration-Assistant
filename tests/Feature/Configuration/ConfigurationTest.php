@@ -25,13 +25,14 @@ it('can list configuration', function () {
 it('can create configuration', function () {
     Livewire::test(ListConfigurations::class)
         ->mountAction('create')
-        ->fillForm([
+        ->setActionData([
         'name' => 'test',
         'configuration_template_id' => ConfigurationTemplate::factory()->Create()->id,
-        'properties' => [[
-            'name' => 'ABC',
-            'type' => 'string',
-            'value' => '123']
+        'data' => ['properties' => [
+            1 => ['name' => 'ABC',
+                'type' => 'string',
+                'value' => '123'],
+            ]
         ]])
         ->callMountedAction()
     ->assertHasNoActionErrors();
