@@ -13,7 +13,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-
 class MicrosoftTenantResource extends Resource
 {
     protected static ?string $model = MicrosoftTenant::class;
@@ -23,13 +22,13 @@ class MicrosoftTenantResource extends Resource
     public static function form(Form $form): Form {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\TextInput::make('tenant_id')->required(),
-                Forms\Components\TextInput::make('client_id')->required(),
-                Forms\Components\TextInput::make('secret_id'),
+                Forms\Components\TextInput::make('name')->required()->string(),
+                Forms\Components\TextInput::make('tenant_id')->required()->string(),
+                Forms\Components\TextInput::make('client_id')->required()->string(),
+                Forms\Components\TextInput::make('secret_id')->string(),
                 Forms\Components\TextInput::make('secret_value')->required()
-                    ->password()->revealable(),
-                Forms\Components\Textarea::make('description'),
+                    ->password()->revealable()->string(),
+                Forms\Components\Textarea::make('description')->string(),
             ])->columns(1);
     }
 
@@ -43,9 +42,15 @@ class MicrosoftTenantResource extends Resource
             ])
             ->actions([
                 Tables\Actions\Action::make('Import configuration')
-                    ->steps(MicrosoftTenantResource::importWizard())
-                    ->action(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->importConfiguration()// function (Array $data) {
-                        //return Configuration::findOrFail($data['configuration']);})
+                    ->form([
+                        Forms\Components\TextInput::make('Tenant_name')
+                            ->default(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->name)
+                            ->readOnly(),
+                        Forms\Components\Select::make('configuration')
+                            ->options(Configuration::all()->pluck('name', 'id'))
+                            ->required(),
+                    ])
+                    ->action(fn ($data, MicrosoftTenant $microsoftTenant) => $microsoftTenant->importConfiguration( Configuration::findOrFail($data['configuration']))
                     )->modalWidth('xl'),
                 Tables\Actions\EditAction::make()
                     ->modalWidth('xl'),
@@ -69,30 +74,5 @@ class MicrosoftTenantResource extends Resource
         return [
             'index' => Pages\ListMicrosoftTenants::route('/'),
         ];
-    }
-
-    private static function importWizard(): array {
-        return [Forms\Components\Wizard\Step::make('Authorization')
-                        ->description('Check the access token')
-                        ->schema([
-                            Forms\Components\TextInput::make('status')
-                                ->readOnly()
-                                ->live(onBlur: true)
-                                ->default(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->tokenStatusMessage())
-                                ->hintAction( Action::make('Create new access token')
-                                            ->requiresConfirmation()
-                                            ->action(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->renewAccessToken()))
-                        ]),
-                    Forms\Components\Wizard\Step::make('Configuration Selection')
-                        ->description('Select the configuration to import')
-                        ->schema([
-                            Forms\Components\TextInput::make('Tenant')
-                                ->readOnly()
-                                ->default(fn (MicrosoftTenant $microsoftTenant) => $microsoftTenant->name),
-                            Forms\Components\Select::make('configuration')
-                                ->options(Configuration::all()->pluck('name', 'id'))
-                                ->required()
-                        ])
-                ];
     }
 }
