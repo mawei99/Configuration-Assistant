@@ -1,9 +1,12 @@
 <?php
 
 use App\Filament\Resources\MicrosoftTenantResource\Pages\ListMicrosoftTenants;
+use App\Models\Configuration\Configuration;
+use App\Models\Response;
 use App\Models\User\User;
 use App\Models\MicrosoftTenant\MicrosoftTenant;
 use App\Filament\Resources\MicrosoftTenantResource;
+use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
 
 beforeEach(function () {
@@ -26,10 +29,11 @@ it('can create microsoft tenant', function () {
         ->mountAction('create')
         ->setActionData([
             'name' => 'test',
-            'tenant_id' => 123,
-            'client_id' => 456,
-            'secret_value' => 789,
-        ])->callMountedAction();
+            'tenant_id' => fake()->uuid(),
+            'client_id' => fake()->uuid(),
+            'secret_value' => 'secretetst',
+        ])->callMountedAction()
+        ->assertHasNoActionErrors();
 
     $this->assertCount(1, MicrosoftTenant::all());
 });
@@ -43,7 +47,8 @@ it('can edit microsoft tenant', function () {
         ->mountTableAction('edit', $microsoftTenant)
         ->setTableActionData([
             'name' => 'After-Editing',
-        ])->callMountedTableAction();
+        ])->callMountedTableAction()
+        ->assertHasNoTableActionErrors();
 
     $this->assertEquals('After-Editing', MicrosoftTenant::first()->name);
 });
@@ -56,4 +61,27 @@ it('can delete microsoft tenant', function () {
         ->callMountedTableAction();
 
     $this->assertCount(0, MicrosoftTenant::all());
+});
+
+it('can push configuration', function () {
+    $microsoftTenant = MicrosoftTenant::factory()->create();
+    $configuration = Configuration::factory()->create();
+
+    Http::preventStrayRequests();
+    Http::fake([
+        'microsoftonline.com/*' => Http::response(['access_token' => '1234'], 200)
+    ]);
+    Http::fake([
+        'https://test.de/api/*' => Http::response()
+    ]);
+
+    Livewire::test(ListMicrosoftTenants::class)
+        ->mountTableAction('Import configuration', $microsoftTenant)
+        ->setTableActionData([
+            'configuration' => $configuration->id,
+        ])
+        ->callMountedTableAction()
+        ->assertHasNoTableActionErrors();
+
+    $this->assertCount(2, Response::all());
 });
