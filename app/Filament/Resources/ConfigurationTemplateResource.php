@@ -21,9 +21,9 @@ class ConfigurationTemplateResource extends Resource
         return $form
             ->columns(1)
             ->schema([
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('url'),
-                Forms\Components\Textarea::make('description'),
+                Forms\Components\TextInput::make('name')->required()->string(),
+                Forms\Components\TextInput::make('url')->required()->url(),
+                Forms\Components\Textarea::make('description')->string(),
             ]);
     }
 

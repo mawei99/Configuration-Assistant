@@ -26,8 +26,9 @@ it('can create configuration template', function () {
         ->mountAction('create')
         ->setActionData([
             'name' => 'test',
-            'url' => 'test.de/api/v1'
-        ])->callMountedAction();
+            'url' => 'https://test.de/api/v1',
+        ])->callMountedAction()
+        ->assertHasNoActionErrors();
 
     $this->assertCount(1, ConfigurationTemplate::all());
 });
@@ -41,7 +42,8 @@ it('can edit configuration template', function () {
         ->mountTableAction('edit', $configurationTemplate)
         ->setTableActionData([
             'name' => 'After-Editing',
-        ])->callMountedTableAction();
+        ])->callMountedTableAction()
+        ->assertHasNoTableActionErrors();
 
     $this->assertEquals('After-Editing', ConfigurationTemplate::first()->name);
 });

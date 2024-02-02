@@ -9,7 +9,7 @@ class ConfigurationTemplateFactory extends Factory
     public function definition(): array {
         return [
             'name' => 'Test Configuration Template',
-            'url' => 'test.de/api/v1'
+            'url' => 'https://test.de/api/v1'
         ];
     }
 }
