@@ -34,7 +34,7 @@ it('can create configuration', function () {
             'value' => '123']
         ]])
         ->callMountedAction()
-    ->assertHasNoTableActionErrors();
+    ->assertHasNoActionErrors();
 
     $this->assertCount(1, Configuration::all());
 })->skip();
@@ -48,7 +48,8 @@ it('can edit configuration', function () {
         ->mountTableAction('edit', $configurationTemplate)
         ->setTableActionData([
             'name' => 'After-Editing',
-        ])->callMountedTableAction();
+        ])->callMountedTableAction()
+    ->assertHasNoTableActionErrors();
 
     $this->assertEquals('After-Editing', Configuration::first()->name);
 });

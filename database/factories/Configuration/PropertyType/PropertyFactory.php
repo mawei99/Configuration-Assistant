@@ -9,7 +9,7 @@ class PropertyFactory extends Factory
 {
     public function definition(): array {
         return [
-            'configuration_id' => Configuration::first() ?? Configuration::factory()->create(),
+            'configuration_id' => Configuration::first()->id ?? Configuration::factory()->create()->id,
             'key' => 'test',
             'value' => 'something',
         ];
