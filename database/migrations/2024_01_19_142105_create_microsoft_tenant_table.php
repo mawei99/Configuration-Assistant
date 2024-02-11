@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('secret_id')->nullable();
             $table->string('secret_value');
             $table->string('description')->nullable();;
-            $table->longText('access_token')->nullable();
             $table->timestamps();
         });
     }
