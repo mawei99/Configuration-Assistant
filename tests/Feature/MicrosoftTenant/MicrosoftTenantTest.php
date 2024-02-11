@@ -72,7 +72,7 @@ it('can push configuration', function () {
         'microsoftonline.com/*' => Http::response(['access_token' => '1234'], 200)
     ]);
     Http::fake([
-        'https://test.de/api/*' => Http::response()
+        'https://test.de/api/*' => Http::response('', 201)
     ]);
 
     Livewire::test(ListMicrosoftTenants::class)
@@ -83,5 +83,5 @@ it('can push configuration', function () {
         ->callMountedTableAction()
         ->assertHasNoTableActionErrors();
 
-    $this->assertCount(2, Response::all());
+    $this->assertCount(1, Response::all());
 });

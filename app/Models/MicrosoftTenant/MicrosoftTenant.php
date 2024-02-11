@@ -50,6 +50,10 @@ class MicrosoftTenant extends Model
     }
 
     private function logResponse() {
+        if ($this->response->status() == 200) {
+            return;
+        }
+
         Response::create([
             'microsoft_Tenant_name' => $this->name,
             'user_name' => Auth::user()->name,
@@ -62,22 +66,17 @@ class MicrosoftTenant extends Model
     }
 
     private function handleResponseCode(): void {
-        if ($this->response->status() == 200) {
-            Notification::make()
-                ->title('Token request successful')
-                ->success()
-                ->send();
-        } elseif ($this->response->status() == 201) {
+        if ($this->response->status() == 201) {
             Notification::make()
                 ->title('Import Successfully')
                 ->success()
                 ->send();
-        } elseif ($this->response->status() == 403) {
+        } elseif ($this->response->status() == 401) {
             Notification::make()
                 ->title('Access Token request failed!')
                 ->danger()
                 ->send();
-        } else {
+        } elseif ($this->response->status() >= 400) {
            Notification::make()
                ->title('Something went wrong!')
                ->danger()
